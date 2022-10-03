@@ -39,7 +39,7 @@ public class Chessboard : MonoBehaviour
                 tiles[hitPosition.x, hitPosition.y].layer = LayerMask.NameToLayer("Hover");
             }
             //if we were already hovering a tile, change the previous one
-            if (currentHover == hitPosition)
+            if (currentHover != hitPosition)
             {
                 tiles[currentHover.x, currentHover.y].layer = LayerMask.NameToLayer("Tile");
                 currentHover = hitPosition;
