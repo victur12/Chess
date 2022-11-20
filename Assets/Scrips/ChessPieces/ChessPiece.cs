@@ -20,19 +20,19 @@ public class ChessPiece : MonoBehaviour
     public int currentX;
     public int currentY;
     public ChessPieceType type;
+    public string name;
 
     private Vector3 desiredPositon;
     private Vector3 desiredScale;
+    
 
 
-
-
-    private void Update() 
+    private void Start()
     {
         //este codigo no esta en el video lo implemte porque con las escalas
         //del video las piezas eran muy pequeñas
-        string nombre = type.ToString();
-        switch (nombre)
+        name = type.ToString();
+        switch (name)
         {
             case "Queen":
                 desiredScale = new Vector3(10, 10, 75);
@@ -47,6 +47,12 @@ public class ChessPiece : MonoBehaviour
                 desiredScale = new Vector3(10, 10, 10);
                 break;
         }
+    }
+
+    private void Update() 
+    {
+        
+        
         transform.position = Vector3.Lerp(transform.position, desiredPositon, Time.deltaTime * 10);
         transform.localScale = Vector3.Lerp(transform.localScale, desiredScale, Time.deltaTime * 10); 
     }
@@ -59,10 +65,13 @@ public class ChessPiece : MonoBehaviour
 
     }
 
-    public virtual void SetScale (Vector3 scale, bool force = false)
+    public virtual void SetScale(Vector3 scale, bool force = false)
     {
         desiredScale = scale;
         if (force)
             transform.localScale = desiredScale;
     }
+
+    
+
 }

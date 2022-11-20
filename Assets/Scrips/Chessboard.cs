@@ -11,6 +11,10 @@ public class Chessboard : MonoBehaviour
     [SerializeField] private float tileSize = 1.0f;
     [SerializeField] private float yOffset = 0.2f;
     [SerializeField] private Vector3 boardCenter = Vector3.zero;
+    [SerializeField] private float deathSize = 0.3f;
+    [SerializeField] private float deathSpacing = 1.0f;
+    [SerializeField] private float dragOffset = 1.0f;
+    
 
     [Header("Prefabs & materials")]
     [SerializeField] private GameObject[] prefabs;
@@ -20,12 +24,16 @@ public class Chessboard : MonoBehaviour
     //LOGIC
     private ChessPiece[,] chessPieces;
     private ChessPiece currentlyDragging;
+    private List<ChessPiece> deadWrites = new List<ChessPiece>();
+    private List<ChessPiece> deadBlacks = new List<ChessPiece>();
     private const int TILE_COUNT_X = 8;
     private const int TILE_COUNT_Y = 8;
     private GameObject[,] tiles;
     private Camera currentCamera;
     private Vector2Int currentHover;
     private Vector3 bounds;
+    //mi codigo para estaclecer la dismenciones de la figura
+    private Vector3 piezescale;
 
     private void Awake() {
         GenerateAllTiles(tileSize, TILE_COUNT_X, TILE_COUNT_Y);
@@ -101,6 +109,15 @@ public class Chessboard : MonoBehaviour
                 currentlyDragging.SetPosition(GetTi1eCenter(currentlyDragging.currentX, currentlyDragging.currentY));
                 currentlyDragging = null;
             }
+        }
+
+        // If we're dragging a piece
+        if (currentlyDragging)
+        {
+            Plane horizontalPlane = new Plane(Vector3.up, Vector3.up);
+            float distance = 0.0f;
+            if (horizontalPlane.Raycast(ray, out distance))
+                currentlyDragging.SetPosition(ray.GetPoint(distance) + new Vector3(0, 0, 0.5f));
         }
     }
 
@@ -232,10 +249,47 @@ public class Chessboard : MonoBehaviour
         if (chessPieces[x, y] != null)
         {
             ChessPiece ocp = chessPieces[x, y];
+            Vector3 escala;
+
+            switch (ocp.name)
+            {
+                case "Queen":
+                    escala = new Vector3(5, 5, 38);
+                    break;
+                case "King":
+                    escala = new Vector3(5, 5, 38);
+                    break;
+                case "Bishop":
+                    escala = new Vector3(5, 5, 38);
+                    break;
+                default:
+                    escala = new Vector3(5, 5, 5);
+                    break;
+            }
 
             if (cp.team == ocp.team)
                 return false;
-            
+            //if its the enemy team
+            if (ocp.team == 0)
+            {
+                deadWrites.Add(ocp);
+                ocp.SetScale(escala);
+                ocp.SetPosition(
+                    new Vector3(8 * tileSize, yOffset, -1 * tileSize)
+                    - bounds
+                    + new Vector3(tileSize / 2, 0, tileSize/ 2)
+                    + (Vector3.forward * deathSpacing) * deadWrites.Count);
+            }
+            else
+            {
+                deadBlacks.Add(ocp);
+                ocp.SetScale(escala);
+                ocp.SetPosition(
+                    new Vector3(-1 * tileSize, yOffset, 8 * tileSize)
+                    - bounds
+                    + new Vector3(tileSize / 2, 0, tileSize / 2)
+                    + (Vector3.back * deathSpacing) * deadBlacks.Count);
+            }
         }
 
         chessPieces[x, y] = cp;
