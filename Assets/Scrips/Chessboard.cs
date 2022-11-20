@@ -80,7 +80,12 @@ public class Chessboard : MonoBehaviour
                 bool validMove = MoveTo(currentlyDragging, hitPosition.x, hitPosition.y);
                 if (!validMove)
                 {
-                    currentlyDragging.transform.position = GetTi1eCenter(previousPosition.x, previousPosition.y);
+                    currentlyDragging.SetPosition(GetTi1eCenter(previousPosition.x, previousPosition.y));
+                    currentlyDragging = null;
+                }
+                else
+                {
+                    currentlyDragging = null;
                 }
             }
         }
@@ -90,6 +95,11 @@ public class Chessboard : MonoBehaviour
             {
                 tiles[currentHover.x, currentHover.y].layer = LayerMask.NameToLayer("Tile");
                 currentHover = -Vector2Int.one;
+            }
+            if (currentlyDragging && Input.GetMouseButtonUp(0))
+            {
+                currentlyDragging.SetPosition(GetTi1eCenter(currentlyDragging.currentX, currentlyDragging.currentY));
+                currentlyDragging = null;
             }
         }
     }
@@ -178,6 +188,7 @@ public class Chessboard : MonoBehaviour
             chessPieces[i, 6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
 
     }
+    
     private ChessPiece SpawnSinglePiece(ChessPieceType type, int team)
     {
         ChessPiece piece = Instantiate(prefabs[(int)type - 1]).GetComponent<ChessPiece>();
@@ -203,7 +214,7 @@ public class Chessboard : MonoBehaviour
     {
         chessPieces[x, y].currentX = x;
         chessPieces[x, y].currentY = y;
-        chessPieces[x, y].transform.position = GetTi1eCenter(x,y);
+        chessPieces[x, y].SetPosition(GetTi1eCenter(x, y), force);
     }
 
     private Vector3 GetTi1eCenter(int x, int y)
