@@ -33,7 +33,7 @@ public class King : ChessPiece
         }
 
         //left
-        if (currentY - 1 >= 0)
+        if (currentX - 1 >= 0)
         {
             //left
             if (board[currentX - 1, currentY] == null)
