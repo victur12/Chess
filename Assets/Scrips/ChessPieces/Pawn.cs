@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class Pawn : ChessPiece
 {
@@ -30,5 +31,39 @@ public class Pawn : ChessPiece
             if (board[currentX - 1, currentY + direction] != null && board[currentX - 1, currentY + direction].team != team)
                 r.Add(new Vector2Int(currentX - 1, currentY + direction));
         return r;
+    }
+
+
+    public override SpecialMove GetSpecialMoves(ref ChessPiece[,] board, ref List<Vector2Int[]> moveList, ref List<Vector2Int> availableMoves)
+    {
+        int direction = (team == 0) ? 1 : -1;
+        // en Passant
+        if (moveList.Count > 0)
+        {
+            Vector2Int[] lastMove = moveList[moveList.Count - 1];
+            if (board[lastMove[1].x, lastMove[1].y].type == ChessPieceType.Pawn)// if the last piece moved was a pawn
+            {
+                if (Mathf.Abs(lastMove[0].y - lastMove[1].y) == 2) // If the last move was a +2 in either direction
+                {
+                    if (board[lastMove[1].x, lastMove[1].y].team != team)//If the move was from the other team
+                    {
+                        if (lastMove[1].y == currentY)// if both paws are on the same Y
+                        {
+                            if (lastMove[1].x == currentX - 1) //landed left
+                            {
+                                availableMoves.Add(new Vector2Int(currentX - 1, currentY + direction));
+                                return SpecialMove.EnPassant;
+                            }
+                            if (lastMove[1].x == currentX + 1) //landed right
+                            {
+                                availableMoves.Add(new Vector2Int(currentX + 1, currentY + direction));
+                                return SpecialMove.EnPassant;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return SpecialMove.None;
     }
 }

@@ -23,7 +23,7 @@ public class ChessPiece : MonoBehaviour
     private string name;
 
     private Vector3 desiredPositon;
-    private Vector3 desiredScale;
+    private Vector3 desiredScale = Vector3.one; 
     
 
 
@@ -69,6 +69,11 @@ public class ChessPiece : MonoBehaviour
         return r;
     }
 
+    public virtual SpecialMove GetSpecialMoves(ref ChessPiece[,] board, ref List<Vector2Int[]> moveList, ref List<Vector2Int> availableMoves) 
+    {
+        return SpecialMove.None;
+    }
+
     public virtual void SetPosition(Vector3 position, bool force = false) 
     {
         desiredPositon = position;
@@ -76,7 +81,6 @@ public class ChessPiece : MonoBehaviour
             transform.position = desiredPositon;
 
     }
-
     public virtual void SetScale(Vector3 scale, bool force = false)
     {
         desiredScale = scale;
