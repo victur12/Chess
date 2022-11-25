@@ -26,11 +26,9 @@ public class ChessPiece : MonoBehaviour
     private Vector3 desiredScale = Vector3.one; 
     
 
-
     private void Start()
     {
-        //este codigo no esta en el video lo implemte porque con las escalas
-        //del video las piezas eran muy pequeñas
+        transform.rotation = Quaternion.Euler((team == 1) ? new Vector3(90, 0, 90) : new Vector3(90, 0, 280));
         name = type.ToString();
         switch (name)
         {

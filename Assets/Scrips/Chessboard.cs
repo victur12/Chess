@@ -22,6 +22,7 @@ public class Chessboard : MonoBehaviour
     [SerializeField] private float deathSize = 0.3f;
     [SerializeField] private float deathSpacing = 1.0f;
     [SerializeField] private float dragOffset = 1.0f;
+    [SerializeField] private GameObject victoryScreen;
     
 
     [Header("Prefabs & materials")]
@@ -51,9 +52,7 @@ public class Chessboard : MonoBehaviour
     private Vector3 piezescale;
 
 
-    //añadir availableMoves.Clear();
-    //y moveList.Clear();
-    //a OnResetButton()
+
 
     private void Awake() {
         isWhiteTurn = true;
@@ -285,6 +284,56 @@ public class Chessboard : MonoBehaviour
         availableMoves.Clear();
     }
 
+    // Checkmate
+    private void CheckMate(int team)
+    {
+        DisplayVictory(team);
+    }
+    private void DisplayVictory(int winningTeam)
+    {
+        victoryScreen.SetActive(true);
+        victoryScreen.transform.GetChild(winningTeam).gameObject.SetActive(true);
+    }
+    public void OnResetButton() 
+    {
+        //UI
+        victoryScreen.transform.GetChild(0).gameObject.SetActive(false);
+        victoryScreen.transform.GetChild(1).gameObject.SetActive(false);
+        victoryScreen.SetActive(false);
+
+        //fields reset
+        currentlyDragging = null;
+        availableMoves.Clear();
+        moveList.Clear();
+
+
+        //Clean up
+        for (int x = 0; x < TILE_COUNT_X; x++)
+        {
+            for (int y = 0; y < TILE_COUNT_Y; y++)
+            {
+                if (chessPieces[x,y] != null)
+                    Destroy(chessPieces[x, y].gameObject);
+                chessPieces[x, y] = null;
+            }
+        }
+
+        for (int i = 0; i < deadWrites.Count; i++)
+            Destroy(deadWrites[i].gameObject);
+        for (int i = 0; i < deadBlacks.Count; i++)
+            Destroy(deadBlacks[i].gameObject);
+        
+        deadWrites.Clear();
+        deadBlacks.Clear();
+
+        SpawnAllPieces();
+        PositionAllPieces();
+        isWhiteTurn = true;
+    }
+    public void OnExitButton()
+    {
+        Application.Quit();
+    }
     // Special moves
     private void ProcessSpecialMove()
     {
@@ -473,6 +522,57 @@ public class Chessboard : MonoBehaviour
         for (int i = 0; i < movesToRemove.Count; i++)
             moves.Remove(movesToRemove[i]);
     }
+    private bool CheckForChechmate() 
+    {
+        var lastMove = moveList[moveList.Count - 1];
+        int targetTeam = (chessPieces[lastMove[1].x, lastMove[1].y].team == 0) ? 1 : 0;
+
+        List<ChessPiece> attackingPieces = new List<ChessPiece>();
+        List<ChessPiece> defendingPieces = new List<ChessPiece>();
+        ChessPiece targetKing = null;
+        for (int x = 0; x < TILE_COUNT_X; x++)
+            for (int y = 0; y < TILE_COUNT_Y; y++)
+                if (chessPieces[x, y] != null)
+                {
+                    if (chessPieces[x, y].team == targetTeam)
+                    {
+                        defendingPieces.Add(chessPieces[x, y]);
+                        if (chessPieces[x,y].type == ChessPieceType.King)
+                            targetKing = chessPieces[x, y];
+                    }
+                    else
+                    {
+                        attackingPieces.Add(chessPieces[x, y]);
+                    }
+                }
+
+        // Is the king attacked tight now?
+        List<Vector2Int> currentAvailableMoves = new List<Vector2Int>();
+        for (int i = 0; i < attackingPieces.Count; i++)
+        {
+            var pieceMoves = attackingPieces[i].GetAvailableMoves(ref chessPieces, TILE_COUNT_X, TILE_COUNT_Y);
+            for (int b = 0; b < pieceMoves.Count; b++)
+                currentAvailableMoves.Add(pieceMoves[b]);
+        }
+
+        //Are we in check right now?
+        if (ContainsValiedMove(ref currentAvailableMoves, new Vector2Int(targetKing.currentX, targetKing.currentY)))
+        {
+            // king is under attack, can we movve something to help him?
+            for (int i = 0; i < defendingPieces.Count; i++)
+            {
+                List<Vector2Int> defendingMoves = defendingPieces[i].GetAvailableMoves(ref chessPieces, TILE_COUNT_X, TILE_COUNT_Y);
+                // since we're sending ref availablemoves, we will be deleting moves that are putting un in check
+                SimulateMoveForSonglePiece(defendingPieces[i], ref defendingMoves, targetKing);
+
+                if (defendingMoves.Count != 0)
+                    return false;
+            }
+
+            return true; // Checkmate Exit
+        }
+        return false;
+    }
 
     //operations
     private bool ContainsValiedMove(ref List<Vector2Int> moves, Vector2Int pos)
@@ -516,6 +616,9 @@ public class Chessboard : MonoBehaviour
             //if its the enemy team
             if (ocp.team == 0)
             {
+                if (ocp.type == ChessPieceType.King)
+                    CheckMate(1);
+
                 deadWrites.Add(ocp);
                 ocp.SetScale(escala);
                 ocp.SetPosition(
@@ -526,6 +629,9 @@ public class Chessboard : MonoBehaviour
             }
             else
             {
+                if (ocp.type == ChessPieceType.King)
+                    CheckMate(0);
+
                 deadBlacks.Add(ocp);
                 ocp.SetScale(escala);
                 ocp.SetPosition(
@@ -544,6 +650,10 @@ public class Chessboard : MonoBehaviour
         moveList.Add(new Vector2Int[] { previousPosition, new Vector2Int(x,y)});
 
         ProcessSpecialMove();
+
+        if (CheckForChechmate())
+            CheckMate(cp.team);
+        
 
         return true;
     }
