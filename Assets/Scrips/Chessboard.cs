@@ -202,9 +202,11 @@ public class Chessboard : MonoBehaviour
         chessPieces[4, 0] = SpawnSinglePiece(ChessPieceType.King, whiteTeam);
         //White Queen
         chessPieces[3, 0] = SpawnSinglePiece(ChessPieceType.Queen, whiteTeam);
-        //
+
+        //Bishop
         chessPieces[2, 0] = SpawnSinglePiece(ChessPieceType.Bishop, whiteTeam);
         chessPieces[5, 0] = SpawnSinglePiece(ChessPieceType.Bishop, whiteTeam);
+
         //White Knight
         chessPieces[1, 0] = SpawnSinglePiece(ChessPieceType.Knight, whiteTeam);
         chessPieces[6, 0] = SpawnSinglePiece(ChessPieceType.Knight, whiteTeam);
@@ -317,6 +319,47 @@ public class Chessboard : MonoBehaviour
                             + (Vector3.back * deathSpacing) * deadBlacks.Count);
                     }
                     chessPieces[enemyPawn.currentX, enemyPawn.currentY] = null;
+                }
+            }
+        }
+        if (specialMove == SpecialMove.Castling)
+        {
+            Vector2Int[] lastMove = moveList[moveList.Count - 1];
+
+            //Left Rook
+            if (lastMove[1].x == 2)
+            {
+                if (lastMove[1].y == 0)
+                {
+                    ChessPiece rook = chessPieces[0, 0];
+                    chessPieces[3, 0] = rook;
+                    PositionSinglePiece(3, 0);
+                    chessPieces[0, 0] = null;
+                }
+                else if (lastMove[1].y == 7)
+                {
+                    ChessPiece rook = chessPieces[0, 7];
+                    chessPieces[3, 7] = rook;
+                    PositionSinglePiece(3, 7);
+                    chessPieces[0, 7] = null;
+                }
+            }
+            //Right Rook
+            else if (lastMove[1].x == 6)
+            {
+                if (lastMove[1].y == 0)
+                {
+                    ChessPiece rook = chessPieces[7, 0];
+                    chessPieces[5, 0] = rook;
+                    PositionSinglePiece(5, 0);
+                    chessPieces[7, 0] = null;
+                }
+                else if (lastMove[1].y == 7)
+                {
+                    ChessPiece rook = chessPieces[7, 7];
+                    chessPieces[5, 7] = rook;
+                    PositionSinglePiece(5, 7);
+                    chessPieces[7, 7] = null;
                 }
             }
         }
