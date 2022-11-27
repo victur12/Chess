@@ -52,7 +52,8 @@ public class Chessboard : MonoBehaviour
     private Vector3 piezescale;
 
 
-
+    //Multiplayer logic
+    private bool localGame = true;
 
     private void Awake() {
         isWhiteTurn = true;
