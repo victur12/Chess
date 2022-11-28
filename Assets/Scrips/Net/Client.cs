@@ -76,13 +76,10 @@ public class Client : MonoBehaviour
         NetworkEvent.Type cmd;
         while ((cmd = connection.PopEvent(driver, out stream)) != NetworkEvent.Type.Empty)
         {
-            if (cmd == NetworkEvent.Type.Data)
-            {
-                if (cmd == NetworkEvent.Type.Connect)
-                {
+            if (cmd == NetworkEvent.Type.Connect)
+            {  
                     //SendToServer(new NetWelcome()) ;
-                    Debug.Log("We are connect");
-                }
+                    Debug.Log("We are connect");         
             }
             else if (cmd == NetworkEvent.Type.Data)
             {
