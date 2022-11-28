@@ -123,14 +123,26 @@ public class Chessboard : MonoBehaviour
             if (currentlyDragging != null && Input.GetMouseButtonUp(0))
             {
                 Vector2Int previousPosition = new Vector2Int(currentlyDragging.currentX, currentlyDragging.currentY);
-                
-                bool validMove = MoveTo(currentlyDragging, hitPosition.x, hitPosition.y);
-                if (!validMove)
+                if (ContainsValiedMove(ref availableMoves, new Vector2Int(hitPosition.x, hitPosition.y)))
                 {
-                    currentlyDragging.SetPosition(GetTi1eCenter(previousPosition.x, previousPosition.y));
+                    MoveTo(previousPosition.x, previousPosition.y, hitPosition.x, hitPosition.y);
+
+                    //net implementation
+                    NetMakeMove mm = new NetMakeMove();
+                    mm.orignalX = previousPosition.x;
+                    mm.orignalY = previousPosition.y;
+                    mm.destinationX = hitPosition.x;
+                    mm.destinationY = hitPosition.y;
+                    mm.teamId = currentTeam;
+                    Client.Instance.SendToServer(mm);
                 }
-                currentlyDragging = null;
-                RemoveHighlightTiles();
+                else
+                { 
+                    currentlyDragging.SetPosition(GetTi1eCenter(previousPosition.x, previousPosition.y));
+                    currentlyDragging = null;
+                    RemoveHighlightTiles();
+                }
+
             }
         }
         else
@@ -590,12 +602,11 @@ public class Chessboard : MonoBehaviour
                 return true;
         return false;
     }
-    private bool MoveTo(ChessPiece cp, int x, int y)
+    private void MoveTo(int originalX, int originalY, int x, int y)
     {
-        if (!ContainsValiedMove(ref availableMoves, new Vector2Int(x,y)))
-            return false;
 
-        Vector2Int previousPosition = new Vector2Int(cp.currentX, cp.currentY);
+        ChessPiece cp = chessPieces[originalX, originalY];
+        Vector2Int previousPosition = new Vector2Int(originalX, originalY);
 
         //Is there another piece on the target position?
         if (chessPieces[x, y] != null)
@@ -620,7 +631,7 @@ public class Chessboard : MonoBehaviour
             }
 
             if (cp.team == ocp.team)
-                return false;
+                return;
             //if its the enemy team
             if (ocp.team == 0)
             {
@@ -658,12 +669,16 @@ public class Chessboard : MonoBehaviour
         moveList.Add(new Vector2Int[] { previousPosition, new Vector2Int(x,y)});
 
         ProcessSpecialMove();
+        if (currentlyDragging)
+            currentlyDragging = null;
+
+        RemoveHighlightTiles();
 
         if (CheckForChechmate())
             CheckMate(cp.team);
         
 
-        return true;
+        return;
     }
     private Vector2Int LookupTileIndex(GameObject hitInfo) 
     {
@@ -679,13 +694,21 @@ public class Chessboard : MonoBehaviour
     private void RegisterEvents() 
     {
         NetUtility.S_WELCOME += OnWelcomeServer;
+        NetUtility.S_MAKE_MOVE += OnMakeMoveServer;
 
         NetUtility.C_WELCOME += OnWelcomeClient;
         NetUtility.C_START_GAME += OnStartGameClient;
+        NetUtility.C_MAKE_MOVE += OnMakeMoveClient;
+
     }
     private void UnRegisterEvents()
     {
+        NetUtility.S_WELCOME -= OnWelcomeServer;
+        NetUtility.S_MAKE_MOVE -= OnMakeMoveServer;
 
+        NetUtility.C_WELCOME -= OnWelcomeClient;
+        NetUtility.C_START_GAME -= OnStartGameClient;
+        NetUtility.C_MAKE_MOVE -= OnMakeMoveClient;
     }
     //SERVER
     private void OnWelcomeServer(NetMessage msg, NetworkConnection cnn)
@@ -705,6 +728,13 @@ public class Chessboard : MonoBehaviour
 
     }
 
+    private void OnMakeMoveServer(NetMessage msg, NetworkConnection cnn)
+    {
+        //receive and just broadcast it back
+        NetMakeMove mm = msg as NetMakeMove;
+
+        Server.Instance.Broadcast(mm);
+    }
     //CLIENT
     private void OnWelcomeClient(NetMessage msg)
     {
@@ -719,6 +749,22 @@ public class Chessboard : MonoBehaviour
     {
         GameUI.Instance.ChangeCamera((currentTeam == 0) ? CameraAngle.WhiteTeam : CameraAngle.BlackTeam);
         
+    }
+    private void OnMakeMoveClient(NetMessage msg)
+    {
+        NetMakeMove mm = msg as NetMakeMove;
+
+        Debug.Log($"MM : {mm.teamId} : {mm.orignalX} {mm.orignalY} -> {mm.destinationX} {mm.destinationY}");
+
+        if (mm.teamId != currentTeam)
+        {
+            ChessPiece target = chessPieces[mm.orignalX, mm.orignalY];
+
+            availableMoves = target.GetAvailableMoves(ref chessPieces, TILE_COUNT_X, TILE_COUNT_Y);
+            specialMove = target.GetSpecialMoves(ref chessPieces, ref moveList, ref availableMoves);
+
+            MoveTo(mm.orignalX, mm.orignalY, mm.destinationX, mm.destinationY);
+        }
     }
     #endregion
 }

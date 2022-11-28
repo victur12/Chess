@@ -83,7 +83,7 @@ public class GameUI : MonoBehaviour
     }
     private void UnRegisterEvents()
     {
-        NetUtility.C_START_GAME += OnStartGameClient;
+        NetUtility.C_START_GAME -= OnStartGameClient;
     }
     private void OnStartGameClient(NetMessage obj)
     {
