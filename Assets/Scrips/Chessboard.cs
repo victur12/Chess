@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Networking.Transport;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -53,13 +54,20 @@ public class Chessboard : MonoBehaviour
 
 
     //Multiplayer logic
+    private int playerCount = -1;
+    private int currentTeam = -1;
     private bool localGame = true;
 
-    private void Awake() {
+    private void Awake() 
+    {
+
         isWhiteTurn = true;
+
         GenerateAllTiles(tileSize, TILE_COUNT_X, TILE_COUNT_Y);
         SpawnAllPieces();
         PositionAllPieces();
+
+        RegisterEvents();
     }
 
     private void Update()
@@ -97,10 +105,9 @@ public class Chessboard : MonoBehaviour
                 if (chessPieces[hitPosition.x, hitPosition.y] != null)
 
                     // Is it our turn?
-                    if ((chessPieces[hitPosition.x, hitPosition.y].team == 0 && isWhiteTurn) || (chessPieces[hitPosition.x, hitPosition.y].team == 1 && !isWhiteTurn))
+                    if ((chessPieces[hitPosition.x, hitPosition.y].team == 0 && isWhiteTurn && currentTeam == 0) || (chessPieces[hitPosition.x, hitPosition.y].team == 1 && !isWhiteTurn && currentTeam == 1))
                     {
                         currentlyDragging = chessPieces[hitPosition.x, hitPosition.y];
-
 
                         //get a list of where i can go, highligt titles as well
                         availableMoves = currentlyDragging.GetAvailableMoves(ref chessPieces, TILE_COUNT_X, TILE_COUNT_Y);
@@ -667,4 +674,51 @@ public class Chessboard : MonoBehaviour
 
         return -Vector2Int.one; 
     }
+
+    #region
+    private void RegisterEvents() 
+    {
+        NetUtility.S_WELCOME += OnWelcomeServer;
+
+        NetUtility.C_WELCOME += OnWelcomeClient;
+        NetUtility.C_START_GAME += OnStartGameClient;
+    }
+    private void UnRegisterEvents()
+    {
+
+    }
+    //SERVER
+    private void OnWelcomeServer(NetMessage msg, NetworkConnection cnn)
+    {
+        // Clien has connected, assign a team and return the message back
+        NetWelcome nw = msg as NetWelcome;
+
+        //Assign a team
+        nw.AssignedTeam = ++playerCount;
+
+        //Return back to the client
+        Server.Instance.SendToClient(cnn, nw);
+
+        //If full start the game
+        if (playerCount == 1)
+            Server.Instance.Broadcast(new NetStartGame());
+
+    }
+
+    //CLIENT
+    private void OnWelcomeClient(NetMessage msg)
+    {
+        //Receive the connection msg
+        NetWelcome nw = msg as NetWelcome;
+
+        currentTeam = nw.AssignedTeam;
+
+        Debug.Log($"My assigned team is {nw.AssignedTeam}");
+    }
+    private void OnStartGameClient(NetMessage obj)
+    {
+        GameUI.Instance.ChangeCamera((currentTeam == 0) ? CameraAngle.WhiteTeam : CameraAngle.BlackTeam);
+        
+    }
+    #endregion
 }
