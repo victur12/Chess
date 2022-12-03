@@ -43,7 +43,6 @@ public class GameUI : MonoBehaviour
         server.Init(8007);
         client.Init("127.0.0.1", 8007);
     }
-
     public void OnOnlineGameButton()
     {
         menuAnimator.SetTrigger("OnlineMenu");
@@ -56,14 +55,12 @@ public class GameUI : MonoBehaviour
         //SetlocalGame?.Invoke(false);
         menuAnimator.SetTrigger("HostMenu");
     }
-
     public void OnOnlineConnectButton()
     {
         client.Init(addressInput.text, 8007);
         //SetlocalGame?.Invoke(false);
         //Debug.Log("OnOnlineConnectButton"); // $$
     }
-
     public void OnOnlineBackButton()
     {
         menuAnimator.SetTrigger("StartMenu");
@@ -74,6 +71,13 @@ public class GameUI : MonoBehaviour
         server.Shutdown();
         client.Shutdown();
         menuAnimator.SetTrigger("OnlineMenu");
+    }
+
+    public void OnLeaveFromGameMenu()
+    {
+        ChangeCamera(CameraAngle.menu);
+        menuAnimator.SetTrigger("StartMenu");
+
     }
 
     private void RegisterEvents()

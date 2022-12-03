@@ -28,9 +28,9 @@ public static class NetUtility
             case OpCode.MAKE_MOVE:
                 msg = new NetMakeMove(stream);
                 break;
-            //case OpCode.REMATCH:
-            //    msg = new NetRematch(stream);
-            //    break;
+            case OpCode.REMATCH:
+                msg = new NetRematch(stream);
+                break;
             default:
                 Debug.LogError("message receive had no OpCode");
                 break;
