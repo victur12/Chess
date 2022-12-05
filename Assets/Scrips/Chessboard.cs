@@ -60,7 +60,7 @@ public class Chessboard : MonoBehaviour
     private bool localGame = true;
     private bool[] playerRematch = new bool[2];
 
-    private void Awake() 
+    private void Start() 
     {
 
         isWhiteTurn = true;
@@ -710,6 +710,10 @@ public class Chessboard : MonoBehaviour
 
         PositionSinglePiece(x,y);
         isWhiteTurn = !isWhiteTurn;
+        if (localGame)
+        {
+            currentTeam = (currentTeam == 0) ? 1 : 0;
+        }
         moveList.Add(new Vector2Int[] { previousPosition, new Vector2Int(x,y)});
 
         ProcessSpecialMove();
@@ -745,6 +749,7 @@ public class Chessboard : MonoBehaviour
         NetUtility.C_START_GAME += OnStartGameClient;
         NetUtility.C_MAKE_MOVE += OnMakeMoveClient;
         NetUtility.C_REMATCH += OnRematchClient;
+        GameUI.Instance.SetlocalGame += OnSetLocalGame;
 
     }
     private void UnRegisterEvents()
@@ -757,6 +762,7 @@ public class Chessboard : MonoBehaviour
         NetUtility.C_START_GAME -= OnStartGameClient;
         NetUtility.C_MAKE_MOVE -= OnMakeMoveClient;
         NetUtility.C_REMATCH -= OnRematchClient;
+        GameUI.Instance.SetlocalGame -= OnSetLocalGame;
     }
     //SERVER
     private void OnWelcomeServer(NetMessage msg, NetworkConnection cnn)
@@ -800,6 +806,9 @@ public class Chessboard : MonoBehaviour
         currentTeam = nw.AssignedTeam;
 
         Debug.Log($"My assigned team is {nw.AssignedTeam}");
+
+        if (localGame && currentTeam == 0)
+            Server.Instance.Broadcast(new NetStartGame());
     }
     private void OnStartGameClient(NetMessage obj)
     {
@@ -845,6 +854,11 @@ public class Chessboard : MonoBehaviour
         }
         if (playerRematch[0] && playerRematch[1])
             GameReset();
+    }
+
+    private void OnSetLocalGame(bool v) 
+    { 
+        localGame = v;
     }
     #endregion
 }

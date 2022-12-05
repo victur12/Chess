@@ -20,6 +20,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject[] cameraAngles;
 
     public Action<bool> SetlocalGame;
+
     private void Awake()
     {
         Instance = this;
@@ -39,7 +40,7 @@ public class GameUI : MonoBehaviour
     public void OnLocalGameButton()
     {
         menuAnimator.SetTrigger("InGameMenu");
-        //SetlocalGame?.Invoke(true);
+        SetlocalGame?.Invoke(true);
         server.Init(8007);
         client.Init("127.0.0.1", 8007);
     }
@@ -52,13 +53,13 @@ public class GameUI : MonoBehaviour
     {
         server.Init(8007);
         client.Init("127.0.0.1", 8007);
-        //SetlocalGame?.Invoke(false);
+        SetlocalGame?.Invoke(false);
         menuAnimator.SetTrigger("HostMenu");
     }
     public void OnOnlineConnectButton()
     {
         client.Init(addressInput.text, 8007);
-        //SetlocalGame?.Invoke(false);
+        SetlocalGame?.Invoke(false);
         //Debug.Log("OnOnlineConnectButton"); // $$
     }
     public void OnOnlineBackButton()
