@@ -59,8 +59,12 @@ public class Chessboard : MonoBehaviour
     private bool localGame = true;
     private bool[] playerRematch = new bool[2];
 
+
+    
+
     private void Start() 
     {
+        
 
         isWhiteTurn = true;
 
@@ -77,6 +81,9 @@ public class Chessboard : MonoBehaviour
             currentCamera = Camera.main;
             return;
         }
+
+
+        
 
         RaycastHit info;
         Ray ray = currentCamera.ScreenPointToRay(Input.mousePosition);
