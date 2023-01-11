@@ -28,21 +28,21 @@ public class ChessPiece : MonoBehaviour
 
     private void Start()
     {
-        transform.rotation = Quaternion.Euler((team == 1) ? new Vector3(90, 0, 90) : new Vector3(90, 0, 280));
+        transform.rotation = Quaternion.Euler((team == 1) ? new Vector3(0, 180, 0) : new Vector3(0, 0, 0));
         name = type.ToString();
         switch (name)
         {
             case "Queen":
-                desiredScale = new Vector3(10, 10, 75);
+                desiredScale = new Vector3(0.02f, 0.02f, 0.02f);
                 break;
             case "King":
-                desiredScale = new Vector3(10, 10, 75);
+                desiredScale = new Vector3(0.02f, 0.02f, 0.02f);
                 break;
             case "Bishop":
-                desiredScale = new Vector3(10, 10, 75);
+                desiredScale = new Vector3(0.02f, 0.02f, 0.02f);
                 break;
             default:
-                desiredScale = new Vector3(10, 10, 10);
+                desiredScale = new Vector3(0.02f, 0.02f, 0.02f);
                 break;
         }
     }

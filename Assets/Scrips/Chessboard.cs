@@ -295,7 +295,7 @@ public class Chessboard : MonoBehaviour
 
     private Vector3 GetTi1eCenter(int x, int y)
     {
-        return new Vector3(x * tileSize, 0.7f, y * tileSize) - bounds + new Vector3(tileSize / 2, 0, tileSize / 2);
+        return new Vector3(x * tileSize, 0f, y * tileSize) - bounds + new Vector3(tileSize / 2, 0, tileSize / 2);
       }
 
     //Highlight Tiles
@@ -673,7 +673,7 @@ public class Chessboard : MonoBehaviour
                     escala = new Vector3(5, 5, 38);
                     break;
                 case "Bishop":
-                    escala = new Vector3(5, 5, 38);
+                    escala = new Vector3(1, 1, 38);
                     break;
                 default:
                     escala = new Vector3(5, 5, 5);
