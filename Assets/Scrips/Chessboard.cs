@@ -667,16 +667,16 @@ public class Chessboard : MonoBehaviour
             switch (ocp.name)
             {
                 case "Queen":
-                    escala = new Vector3(5, 5, 38);
+                    escala = new Vector3(0.01f, 0.01f, 0.01f);
                     break;
                 case "King":
-                    escala = new Vector3(5, 5, 38);
+                    escala = new Vector3(0.01f, 0.01f, 0.01f);
                     break;
                 case "Bishop":
-                    escala = new Vector3(1, 1, 38);
+                    escala = new Vector3(0.01f, 0.01f, 0.01f);
                     break;
                 default:
-                    escala = new Vector3(5, 5, 5);
+                    escala = new Vector3(0.01f, 0.01f, 0.01f);
                     break;
             }
 
