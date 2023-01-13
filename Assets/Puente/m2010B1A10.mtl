@@ -1,0 +1,141 @@
+# Blender 3.3.1 MTL File: 'None'
+# www.blender.org
+
+newmtl m0010B0A18_0.001
+Ns 29.411768
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_wall_stone.png
+map_Bump D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_wall_stone_n.png
+
+newmtl m0010B0A18_1.001
+Ns 29.411768
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_wall_building_01.png
+map_Bump D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_wall_building_01_n.png
+
+newmtl m0010B0A18_10.001
+Ns 29.411768
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_section_01.png
+map_Bump D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_section_01_n.png
+
+newmtl m0010B0A18_11.001
+Ns 29.411768
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+illum 2
+map_Kd D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_01_side_01.png
+map_d D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_01_side_01.png
+
+newmtl m0010B0A18_12.001
+Ns 29.411768
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_01_wall_20.png
+map_Bump D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_01_wall_20_n.png
+
+newmtl m0010B0A18_2.001
+Ns 29.411768
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_wall_building_03.png
+map_Bump D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_wall_building_03_n.png
+
+newmtl m0010B0A18_3.001
+Ns 29.411768
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_floor_block.png
+map_Bump D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_floor_block_n.png
+
+newmtl m0010B0A18_4.001
+Ns 29.411768
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_wood_passage.png
+
+newmtl m0010B0A18_5.001
+Ns 29.411768
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_stair.png
+
+newmtl m0010B0A18_6.001
+Ns 29.411768
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_block.png
+map_Bump D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_block_n.png
+
+newmtl m0010B0A18_7.001
+Ns 29.411768
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+illum 2
+map_Kd D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_decal_floor_rubble.png
+map_d D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_decal_floor_rubble.png
+map_Bump D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_decal_floor_rubble_n.png
+
+newmtl m0010B0A18_8.001
+Ns 29.411768
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+illum 2
+map_Kd D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_decal_floor_blood_01.png
+map_d D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_decal_floor_blood_01.png
+
+newmtl m0010B0A18_9.001
+Ns 29.411768
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_section_01.png
+map_Bump D:/semestre 7/AJEDREz/pruebas/Assets/models/Undead Burg & Undead Parish/m10_section_01_n.png
