@@ -421,7 +421,7 @@ public class Chessboard : MonoBehaviour
                     if (enemyPawn.team == 0)
                     {
                         deadWrites.Add(enemyPawn);
-                        enemyPawn.SetScale(new Vector3(5, 5, 5));
+                        enemyPawn.SetScale(new Vector3(0.01f, 0.01f, 0.01f));
                         enemyPawn.SetPosition(
                             new Vector3(8 * tileSize, yOffset, -1 * tileSize)
                             - bounds
@@ -431,7 +431,7 @@ public class Chessboard : MonoBehaviour
                     else 
                     {
                         deadBlacks.Add(enemyPawn);
-                        enemyPawn.SetScale(new Vector3(5, 5, 5));
+                        enemyPawn.SetScale(new Vector3(0.01f, 0.01f, 0.01f));
                         enemyPawn.SetPosition(
                             new Vector3(-1 * tileSize, yOffset, 8 * tileSize)
                             - bounds

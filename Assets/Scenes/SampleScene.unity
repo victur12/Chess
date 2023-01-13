@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: d4b35c7da674faa4ab36d55cb6af81a9, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 2039a0ad0a9d05549928b70362f54902, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.20848739, g: 0.23047349, b: 0.23658808, a: 1}
+  m_IndirectSpecularColor: {r: 0.028991647, g: 0.03000932, b: 0.030014547, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1778,8 +1778,8 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
+  m_ColorTemperature: 14160
+  m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
@@ -2914,8 +2914,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.29316497, y: -0.6434705, z: 0.29316497, w: 0.6434705}
-  m_LocalPosition: {x: 8.7, y: 14, z: -111.6}
+  m_LocalRotation: {x: -0.21333712, y: -0.6741567, z: -0.21333712, w: 0.6741567}
+  m_LocalPosition: {x: 8.7, y: 14, z: -120.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3012,7 +3012,7 @@ Skybox:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_Enabled: 0
-  m_CustomSkybox: {fileID: 2100000, guid: c52cd19d7fb21944bb26c4f96f833400, type: 2}
+  m_CustomSkybox: {fileID: 2100000, guid: e391f00234292cc4f935308c11cf0e54, type: 2}
 --- !u!1 &968674366
 GameObject:
   m_ObjectHideFlags: 0
@@ -4653,15 +4653,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1847329718}
-  m_LocalRotation: {x: 0.29316497, y: -0.6434705, z: 0.29316497, w: 0.6434705}
-  m_LocalPosition: {x: 8.7, y: 14, z: -111.6}
+  m_LocalRotation: {x: -0.21333712, y: -0.6741567, z: -0.21333712, w: 0.6741567}
+  m_LocalPosition: {x: 8.7, y: 14, z: -120.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 923518709}
   m_Father: {fileID: 751720335}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 48.988, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: -35.12, y: -90, z: 0}
 --- !u!114 &1847329720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5016,7 +5016,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1898, y: -1744}
+  m_AnchoredPosition: {x: -1897.9999, y: -1744}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2016161361
